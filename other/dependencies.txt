@@ -1,0 +1,8 @@
+PIL
+markdown
+django-registration
+and
+some
+more
+modules
+...

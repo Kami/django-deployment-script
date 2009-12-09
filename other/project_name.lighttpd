@@ -1,0 +1,3 @@
+$HTTP["host"] == "yourdomain.com" {
+  server.document-root = "/path/to/your/app/releases/current/project_name/site_media/"
+}

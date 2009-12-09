@@ -1,0 +1,31 @@
+<VirtualHost *:80>
+	ServerAdmin info@yourdomain.com
+    ServerName yourdomain.com
+	
+	# WSGI Settings
+    WSGIDaemonProcess project_name-production user=www group=www threads=25 python-path=/path/to/your/app/lib/python2.6/site-packages
+    WSGIProcessGroup project_name-production
+
+    WSGIScriptAlias / /path/to/your/app/releases/current/project_name/project_name.wsgi
+    <Directory /path/to/your/app/releases/current/project_name>
+        Order deny,allow
+        Allow from all
+    </Directory>
+    
+    # Proxy settings (redirects the requests for static files to lighttpd)
+    <Proxy 127.0.0.1>
+        AddDefaultCharset off
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.1
+	</Proxy>
+	
+	ProxyRequests Off
+	ProxyPreserveHost On
+	ProxyPass /site_media http://127.0.0.1:81/
+	ProxyPassReverse / http://127.0.0.1:81/
+
+    # Log files
+	ErrorLog /path/to/your/app/logs/error.log
+	CustomLog /path/to/your/app/logs/access.log combined
+</VirtualHost>
